@@ -1,5 +1,6 @@
-// // import { UserInfo } from "firebase/auth"
-// import { auth } from "../config/firebase"
+ import { UserInfo } from "firebase/auth"
+ import { signInWithEmailAndPassword } from "firebase/auth";
+ import { auth } from "./database/firebase"
 // // usestate e usefect
 // import { onAuthStateChanged } from "firebase/auth";
 // //
@@ -25,7 +26,15 @@
         };
     }
     
-    export default function LogingUser({ email, password }: LoginProps): Promise<ResponseProps> {
+    export default async function LogingUser({ email, password }: LoginProps): Promise<ResponseProps> {
+        const userFirebase = await signInWithEmailAndPassword(auth, email,password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+        })
+        .catch( (error)=> {
+                const errocode = error.code ;
+                const errormsg = error.message ;
+    })
         return new Promise(resolve => {
             setTimeout(() => {
                 resolve({
