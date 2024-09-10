@@ -1,6 +1,7 @@
 import { createContext, useState} from "react"
 import LogingUser  from "../services/authService";
 
+
 interface AuthContextData {
     signed: boolean;
     user: object | null;
@@ -14,10 +15,12 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {  
     const [ user, setUser ]= useState<object | null>(null);
 
-    async function SignIn(userName, userPassword){
-        const response = await LogingUser(userName, userPassword);
+    async function SignIn(email: string, password: string) {
+        const response = await LogingUser({ email, password });
         setUser(response.user);
     }
+    
+    
 
     async function SignOut(){
         setUser(null);

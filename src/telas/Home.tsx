@@ -34,7 +34,7 @@ const Home = ({ navigation }:NavigationProps) => {
       </View>
 
       <View>
-          <Text> apelido: {name}</Text>
+          <Text> senha: {name}</Text>
           <Text> email:  {email}</Text>          
           
         <View>
