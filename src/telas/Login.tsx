@@ -1,59 +1,92 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import AuthContext from '../context/auth';
-
 interface NavigationProps {
-    navigation: NavigationProp<ParamListBase>;
+  navigation:NavigationProp<ParamListBase>;
 }
 
 const PlaceholderImage = require('../component/image/usuario.png');
 
-const Login = ({ navigation }: NavigationProps) => {
-    const [nomeUsuario, setNomeUsuario] = useState('');
-    const [senha, setSenha] = useState('');
+const Login = ({ navigation }: NavigationProps ) => {
+  const [nomeUsuario, setNomeUsuario] = useState('');
+  const [senha, setSenha] = useState('');
 
-    const { signed, SignIn, user } = useContext(AuthContext);
+  const { SignIn } = useContext(AuthContext); 
 
-    const onLoginClick = () => {
-        console.log("Attempting to sign in with:", nomeUsuario, senha);
-        SignIn(nomeUsuario, senha);
-    };
+  const onLoginClick = () => {
+  //
+  //   signInWithEmailAndPassword( auth, nomeUsuario,  senha)
+  //   .then( (userCredential)=> {
+  //       const user =  userCredential.user;
+  //       // console.log(user)        //
+  //       // navigation.navigate('Home',
+  //       //   { screen: 'Home',
+  //       //     params: { user: {user}} }, )
+  //       navigation.push('Login') ;
+  //   } )
+  //   .catch( (error)=> {
+  //     const errocode = error.code ;
+  //     const errormsg = error.message ;
+  //     // tratamento das mensagens de erro pelo error.code      
+  //     switch (errocode) {
+  //       case 'auth/invalid-credential':
+  //         alert( "Usuario ou Senha Invalida !") ; 
+  //         return null
+  //       case 'auth/missing-password':
+  //         alert( "Usuario ou Senha em Branco !") ; 
+  //         return null
+  //       case 'auth/invalid-email':
+  //         alert( "Usuario ou Senha em Branco !") ; 
+  //         return null
+  //       default:
+  //         alert( "Ops, Desculpa algo aconteceu,\n tente novamente!") ; 
+  //     }      
+  //   } );    
+  //console.log(" ir para home") }
+  SignIn(nomeUsuario, senha);
+  // navigation.navigate('Registrar')
+ }
 
-    const onPressRegister = () => {
-        navigation.navigate('Registrar');
-    };
+  const onPressRegister = () => {
+    navigation.navigate('Registrar')
+  }
 
-    return (
-        <View style={styles.container}>
+  return (
+    <View style={styles.container}>
             <Image source={PlaceholderImage} style={styles.image} />
             <Text style={styles.titulo}>Login Aula 10/09/24</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Nome de Usuário"
-                onChangeText={text => setNomeUsuario(text)}
-                value={nomeUsuario}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Senha"
-                onChangeText={text => setSenha(text)}
-                value={senha}
-                secureTextEntry={true}
-            />
-            <View style={styles.textoContainer}>
-                <Text>Não possui conta? {'  '}
-                    <Text style={styles.textoCadastro}
-                        onPress={onPressRegister}>
-                        Faça o cadastro!
-                    </Text>
-                </Text>
-            </View>
-            <TouchableOpacity style={styles.botao} onPress={onLoginClick}>
-                <Text style={styles.textoBotao}>Entrar</Text>
-            </TouchableOpacity>
-        </View>
-    );
+      <TextInput
+        style={styles.input}
+        placeholder="Nome de Usuário"
+        onChangeText={text => setNomeUsuario(text)}
+        value={nomeUsuario}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Senha"
+        onChangeText={text => setSenha(text)}
+        value={senha}
+        secureTextEntry={true}
+      />
+      
+      <View style={styles.textoContainer}>
+          <Text>Não possui conta? {'  '}
+             <Text style={styles.textoCadastro} 
+              onPress={onPressRegister}>
+                Faça o cadastro!
+             </Text>
+          </Text> 
+      </View>
+
+      <TouchableOpacity style={styles.botao} 
+         onPress={onLoginClick}>
+        <Text style={styles.textoBotao}>Entrar</Text>
+      </TouchableOpacity>
+    </View>
+
+    
+  );
 };
 
 const styles = StyleSheet.create({

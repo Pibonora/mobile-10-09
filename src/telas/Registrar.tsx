@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react-native';
 //import {createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../services/database/firebase';
 import { NavigationProp, ParamListBase } from '@react-navigation/native';
+import AuthContext from '../context/auth';
 
 interface NavigationProps {
   navigation:NavigationProp<ParamListBase>;
@@ -15,8 +16,9 @@ const Registrar = ({navigation}:NavigationProps) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [senha2, setSenha2] = useState('');
+  const {CreateAccount} = useContext(AuthContext)
 
-  const onLoginClickRegistro = () => {
+  const onLoginClickRegistro = async () => {
     // confere se a senha e iqual a senha de confirmação
     // console.log( '>>> ', (( senha.trim() === '') || ( senha2.trim() === '') ))
     if ( senha.trim() === '' ||  senha2.trim() === '' ) {
@@ -26,34 +28,10 @@ const Registrar = ({navigation}:NavigationProps) => {
     if (senha !== senha2) {
        alert("Senha informada estão divergente, \n tente novamente!")
        return
-    }
-    //
-    // createUserWithEmailAndPassword( auth, email,  senha, telefone)
-    // .then( (userCredential)=> {
-    //     const user =  userCredential.user;
-    //     //console.log(user)
-    //     //
-    //     navigation.navigate('Login')
-    // } )
-    // .catch( (error)=> {
-    //   const errocode = error.code ;
-    //   const errormsg = error.message ;
-    //   // console.log( errocode );
-    //   // console.log( errormsg );
-    //   switch (errocode) {
-    //     case 'auth/email-already-in-use':
-    //       alert( "Email já esta em utilização !") ; 
-    //       return null
-    //     case 'auth/invalid-email':
-    //       alert( "Email invalido!") ; 
-    //       return null 
-    //     default:
-    //       alert( "falha ao registrar o usuario !") ; 
-    //       return null  
-    //   }    
-    navigation.navigate('Home')
-    // } );
-     
+
+      }
+
+      const response = await CreateAccount(email, senha);
   }
 
   const onHandleClickLogin = () => {
